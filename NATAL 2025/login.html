@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="title">Login Natal</title>
+  <meta name="theme-color" content="#8b0000" />
+  <style>
+    :root{--card-w:340px;}
+    html,body{height:100%;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    body{
+      background-color:#8b0000;
+      background-image:url('./870870eb-f71e-4df0-9a73-961df616b845.jpg');
+      background-repeat:no-repeat;background-position:center center;background-size:cover;
+      display:flex;align-items:center;justify-content:center;color:#fff;
+    }
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35)}
+    .main{position:relative;z-index:2}
+
+    .card{
+      width:var(--card-w);max-width:calc(100% - 40px);
+      background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border-radius:16px;padding:26px;backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,0.5);text-align:center
+    }
+    .brand{font-size:20px;margin:0 0 12px 0;font-weight:700}
+    .brand small{display:block;font-size:12px;margin-top:6px;opacity:0.9}
+
+    /* floating icons (6 icons, light animation) */
+    .float-row{display:flex;justify-content:center;gap:6px;margin-bottom:8px;align-items:center}
+    .float-icon{
+      display:inline-block;
+      transform-origin:center;
+      animation:float 3.6s ease-in-out infinite;
+      font-size:20px;
+      opacity:0.98;
+      vertical-align:middle;
+      margin:0 3px;
+    }
+    .float-icon:nth-child(2){animation-delay:0.6s}
+    .float-icon:nth-child(3){animation-delay:1.1s}
+    .float-icon:nth-child(4){animation-delay:1.6s}
+    .float-icon:nth-child(5){animation-delay:2.2s}
+    .float-icon:nth-child(6){animation-delay:2.8s}
+    @keyframes float{
+      0%{transform:translateY(0) rotate(-4deg)}
+      50%{transform:translateY(-8px) rotate(4deg)}
+      100%{transform:translateY(0) rotate(-4deg)}
+    }
+
+    /* Perapihan kolom voucher & tombol */
+    .card input[type=text],
+    .card input[type=password],
+    .card input[type=hidden]{
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px 14px;
+      margin: 10px 0 8px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 15px;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      outline: none;
+    }
+    .card input[type=text]::placeholder{ color: rgba(255,255,255,0.7); }
+    .card input[type=text]:focus,
+    .card input[type=password]:focus {
+      box-shadow: 0 0 0 4px rgba(255,26,26,0.14);
+      border-color: rgba(255,26,26,0.35);
+    }
+
+    .btn{display:inline-block;width:100%;padding:12px;border-radius:10px;border:0;background:#ff1a1a;color:#fff;font-weight:700;cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+    .mutebtn{margin-top:10px;background:transparent;border:1px solid rgba(255,255,255,0.12);color:#fff}
+
+    .marq{font-size:13px;margin-bottom:10px}
+    .small-row{display:flex;gap:8px;justify-content:center;margin-bottom:8px}
+    .small-row .small{flex:1;padding:8px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+
+    .footer{font-size:13px;margin-top:14px;opacity:0.9}
+
+    /* simple CSS snow (no external image) */
+    .snow{pointer-events:none;position:fixed;inset:0;z-index:1;overflow:hidden}
+    .snow .flake{position:absolute;top:-15%;color:#fff;user-select:none;animation:fall linear infinite}
+    /* brighter / more visible snow: larger size & higher opacity */
+    .snow .flake{opacity:0.9;font-size:14px;filter:drop-shadow(0 1px 0 rgba(0,0,0,0.25))}
+    @keyframes fall{to{transform:translateY(120vh) rotate(360deg)}}
+
+    /* responsive */
+    @media (max-width:420px){:root{--card-w:320px} .float-icon{font-size:18px}}
+  </style>
+</head>
+<body onclick="playAudio()" onload="init()">
+  <div class="overlay"></div>
+  <div class="main">
+    <div class="card">
+
+      <!-- floating icons (6) -->
+      <div class="float-row" aria-hidden="true">
+        <div class="float-icon">🎄</div>
+        <div class="float-icon">❄️</div>
+        <div class="float-icon">⛄</div>
+        <div class="float-icon">🎁</div>
+        <div class="float-icon">✨</div>
+        <div class="float-icon">🎅</div>
+      </div>
+
+      <h1 class="brand">🎄 Merry Christmas 🎄<small>Selamat Natal &amp; Tahun Baru</small></h1>
+
+      <div class="marq"><marquee>Selamat Natal 🎄 Merry Christmas 🎁 — Selamat Natal 🎄 Merry Christmas ✨</marquee></div>
+
+      <div class="small-row">
+        <div class="small" onclick="showVoucher()">Voucher</div>
+        <div class="small" onclick="showMember()">Member</div>
+        <div class="small" onclick="window.location='https://laksa19.github.io/myqr'">QR Code</div>
+      </div>
+
+      <!-- MikroTik hotspot form -->
+      $(if chap-id)
+      <form name="sendin" action="$(link-login-only)" method="post" style="display:none;">
+        <input type="hidden" name="username" />
+        <input type="hidden" name="password" />
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+      </form>
+      <script type="text/javascript" src="md5.js"></script>
+      <script>
+        function doLoginChap() {
+          document.sendin.username.value = document.login.username.value;
+          document.sendin.password.value = hexMD5('$(chap-id)'+ document.login.password.value + '$(chap-challenge)');
+          document.sendin.submit();
+          return false;
+        }
+      </script>
+      $(endif)
+
+      <form autocomplete="off" name="login" action="$(link-login-only)" method="post" $(if chap-id) onsubmit="return doLoginChap()" $(endif)>
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+
+        <!-- single voucher field -->
+        <input id="username" class="username" name="username" type="text" value="$(username)" placeholder="Kode Voucher" />
+        <!-- password will mirror voucher when in voucher mode -->
+        <input id="password" class="password" name="password" type="hidden" />
+
+        <button class="btn" type="submit">Login</button>
+        <button type="button" class="btn mutebtn" id="muteBtn" onclick="toggleMute()">Mute</button>
+      </form>
+
+      $(if trial == 'yes')
+      <div style="margin-top:10px">GRATIS 1 MENIT <a style="text-decoration:underline;color:#fff" href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">klik di sini</a></div>
+      $(endif)
+
+      $(if error)<div class="notice">$(error)</div>$(endif)
+
+      <div class="footer">Firmannet @ 2025 — Powered by <a href="https://laksa19.github.io" style="color:#fff;text-decoration:underline">Mikhmon</a></div>
+    </div>
+  </div>
+
+  <!-- audio: play on first interaction (browsers block autoplay otherwise) -->
+  <audio id="my_audio" loop>
+    <source src="musik.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- lightweight CSS snow using emojis -->
+  <div class="snow" aria-hidden="true"></div>
+
+  <script>
+    // page title
+    document.getElementById('title').innerText = window.location.hostname + ' > login';
+
+    // elements
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+    var infologinText = 'Masukkan Kode Voucher kemudian klik login.';
+
+    function init(){
+      if(username) username.focus();
+      showVoucher();
+      createSnow();
+    }
+
+    function setpass(){
+      var u = username.value || '';
+      password.value = u;
+    }
+    username.addEventListener('input', setpass);
+
+    function showVoucher(){
+      username.placeholder='Kode Voucher';
+      password.type='hidden';
+      setpass();
+    }
+    function showMember(){
+      username.placeholder='Username';
+      password.type='password';
+      password.value='';
+      username.focus();
+    }
+
+    // audio control
+    var audio = document.getElementById('my_audio');
+    function playAudio(){
+      // try to play on first click anywhere
+      if(audio && audio.paused){
+        audio.play().catch(function(e){/*ignore*/});
+      }
+    }
+    function toggleMute(){
+      if(!audio) return;
+      audio.muted = !audio.muted;
+      document.getElementById('muteBtn').innerText = audio.muted ? 'Unmute' : 'Mute';
+    }
+
+    // simple snow generator using ❄️ emoji (brighter & slightly bigger)
+    function createSnow(){
+      var container = document.querySelector('.snow');
+      if(!container) return;
+      var count = Math.min(Math.floor(window.innerWidth/22), 80); // more flakes, limited
+      for(var i=0;i<count;i++){
+        var fl = document.createElement('div');
+        fl.className='flake';
+        fl.style.left = Math.random()*100 + '%';
+        fl.style.fontSize = (10+Math.random()*26)+'px'; // slightly bigger
+        fl.style.opacity = 0.7 + Math.random()*0.3; // brighter
+        fl.style.animationDuration = (6+Math.random()*12)+'s';
+        fl.style.animationDelay = (Math.random()*5)+'s';
+        fl.innerText='❄️';
+        container.appendChild(fl);
+      }
+    }
+  </script>
+</body>
+</html>

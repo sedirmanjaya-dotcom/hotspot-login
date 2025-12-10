@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title id="title">Status</title>
+  <meta name="theme-color" content="#8b0000" />
+  <style>
+    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif}
+    body{
+      background:#8b0000 url('./870870eb-f71e-4df0-9a73-961df616b845.jpg') center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;color:#fff;padding:20px;
+    }
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35)}
+    .card{position:relative;z-index:2;width:760px;max-width:100%;padding:20px;border-radius:14px;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+    .head{display:flex;align-items:center;gap:14px}
+    .head h2{margin:0}
+    .table2{width:100%;margin-top:12px;border-collapse:collapse}
+    .table2 td{padding:8px 6px;font-size:14px;color:#fff}
+    .table2 td:first-child{text-align:right;width:38%;opacity:0.95}
+    .button2{margin-top:12px;padding:10px 14px;background:#ff1a1a;border:0;border-radius:10px;color:#fff;font-weight:700;cursor:pointer}
+    iframe#exp{width:100%;height:36px;border:0;background:transparent}
+    @media(max-width:640px){.card{padding:16px}.table2 td:first-child{text-align:left;width:45%}}
+  </style>
+</head>
+<body $(if advert-pending == 'yes') onload="openAdvert()" $(endif)>
+  <div class="overlay"></div>
+  <div class="card">
+    <div class="head">
+      <div style="font-size:36px">🎄</div>
+      <div>
+        $(if login-by == 'trial')
+          <h2>Welcome — trial user</h2>
+        $(elif login-by != 'mac')
+          <h2>Welcome, <span id="user">$(username)</span></h2>
+        $(endif)
+        <div style="opacity:0.9;font-size:13px">Status koneksi hotspot Anda</div>
+      </div>
+    </div>
+
+    <table class="table2">
+      <tr><td>IP Address</td><td>$(ip)</td></tr>
+      <tr><td>MAC Address</td><td>$(mac)</td></tr>
+      <tr><td>Upload</td><td>$(bytes-in-nice)</td></tr>
+      <tr><td>Download</td><td>$(bytes-out-nice)</td></tr>
+      <tr><td>Terhubung</td><td>$(uptime)</td></tr>
+      $(if remain-bytes-total)
+        <tr><td>Sisa Kuota</td><td>$(remain-bytes-total-nice)</td></tr>
+      $(endif)
+      $(if session-time-left)
+        <tr><td>Sisa Waktu</td><td>$(session-time-left)</td></tr>
+      $(endif)
+      $(if blocked == 'yes')
+        <tr><td>Status</td><td style="color:#ffb3b3">Advertisement required — <a href="$(link-advert)" target="hotspot_advert" style="color:#ffdcdc">tonton</a></td></tr>
+      $(elif refresh-timeout)
+        <tr><td>Refresh</td><td>$(refresh-timeout)</td></tr>
+      $(endif)
+      <tr><td>Expired</td><td><iframe id="exp" frameborder="0" scrolling="no" src="about:blank"></iframe></td></tr>
+    </table>
+
+    $(if login-by-mac != 'yes')
+    <form action="$(link-logout)" name="logout" onsubmit="return openLogout()">
+      <button class="button2" type="submit">Logout</button>
+    </form>
+    $(endif)
+
+  </div>
+
+<script>
+  // advert popup logic (rendered only if advert-pending == 'yes')
+  $(if advert-pending == 'yes')
+  var popup = null;
+  function focusAdvert(){ if(window.focus && popup) popup.focus(); }
+  function openAdvert(){ popup = open('$(link-advert)','hotspot_advert','toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=600,height=420'); setTimeout(focusAdvert,1000); }
+  $(endif)
+
+  function openLogout(){ if(window.name != 'hotspot_status') return true; open('$(link-logout)','hotspot_logout','toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250'); window.close(); return false; }
+
+  document.getElementById('title').innerText = window.location.hostname + ' > status';
+
+  // populate expiry iframe (same as original)
+  try{
+    var usr = document.getElementById('user') ? document.getElementById('user').innerText : '';
+    var url = "https://example.com/status/status.php?name="; // replace with actual status server URL if needed
+    var SessionName = "wifijoss";
+    var getvalid = url+encodeURIComponent(usr)+"&session="+SessionName;
+    document.getElementById('exp').src = getvalid;
+  }catch(e){/*ignore*/}
+</script>
+</body>
+</html>

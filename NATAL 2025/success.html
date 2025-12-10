@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title id="title">Success</title>
+  <meta name="theme-color" content="#8b0000" />
+  <style>
+    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif}
+    body{
+      background:#8b0000 url('./870870eb-f71e-4df0-9a73-961df616b845.jpg') center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;color:#fff;padding:20px;
+    }
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35)}
+    .card{position:relative;z-index:2;width:720px;max-width:100%;padding:26px;border-radius:16px;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);box-shadow:0 12px 40px rgba(0,0,0,0.6);text-align:center}
+    .bigicon{font-size:88px;margin-bottom:8px}
+    h2{margin:6px 0}
+    .network{font-weight:700}
+    .button{margin-top:14px;padding:12px 18px;border-radius:10px;border:0;background:#ff1a1a;color:#fff;font-weight:700;cursor:pointer}
+    @media(max-width:640px){.card{padding:18px}.bigicon{font-size:64px}}
+  </style>
+  $(if refresh-timeout)
+  <script>
+    setTimeout(function(){
+      location.href = './status';
+    },4000);
+  </script>
+  $(endif)
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="card">
+    $(if login-by == 'trial')
+      <div class="bigicon">🎁</div>
+      <h2>Welcome — trial user</h2>
+    $(elif login-by != 'mac')
+      <div class="bigicon">🎉</div>
+      <h2>Selamat, <span id="user">$(username)</span></h2>
+    $(endif)
+
+    <p>Anda telah terhubung di jaringan <br><span class="network" id="dname">$(hostname)</span></p>
+
+    <button class="button" onclick="location.href='./status'">Check Status</button>
+  </div>
+
+<script>
+  document.getElementById('title').innerText = window.location.hostname + ' > success';
+  var d = document.getElementById('dname'); if(d) d.innerText = window.location.hostname;
+</script>
+</body>
+</html>

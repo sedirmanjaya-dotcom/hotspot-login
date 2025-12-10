@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="title">Logout</title>
+  <style>
+    body{
+      margin:0;padding:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:#8b0000 url('./870870eb-f71e-4df0-9a73-961df616b845.jpg') center/cover no-repeat;
+      height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;
+    }
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35);}
+    .card{
+      position:relative;z-index:2;
+      width:340px;max-width:90%;padding:26px;
+      border-radius:18px;
+      text-align:center;
+      background:rgba(255,255,255,0.12);
+      backdrop-filter:blur(6px);
+      box-shadow:0 8px 30px rgba(0,0,0,0.5);
+    }
+    table{width:100%;margin-top:12px;font-size:14px}
+    td{padding:6px 0;}
+    td:first-child{text-align:right;opacity:0.85;}
+    .btn{
+      margin-top:16px;width:100%;padding:12px;border:0;
+      background:#ff1a1a;color:#fff;border-radius:10px;font-weight:700;cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+<div class="overlay"></div>
+<div class="card">
+  <h2 style="margin-top:0">🎄 Merry Christmas 🎄</h2>
+  <h3 id="user">$(username)</h3>
+  <p style="margin:6px 0 14px 0;font-size:15px;">Anda telah keluar dari hotspot!</p>
+
+  <table>
+    <tr><td>IP Address</td><td>$(ip)</td></tr>
+    <tr><td>MAC Address</td><td>$(mac)</td></tr>
+    <tr><td>Terkoneksi</td><td>$(uptime)</td></tr>
+    <tr><td>Upload</td><td>$(bytes-in-nice)</td></tr>
+    <tr><td>Download</td><td>$(bytes-out-nice)</td></tr>
+    $(if remain-bytes-total)
+    <tr><td>Sisa Kuota</td><td>$(remain-bytes-total-nice)</td></tr>
+    $(endif)
+    $(if session-time-left)
+    <tr><td>Sisa Waktu</td><td>$(session-time-left)</td></tr>
+    $(endif)
+  </table>
+
+  <form action="$(link-login)" onsubmit="return openLogin()">
+    <button class="btn">Login Kembali</button>
+  </form>
+</div>
+
+<script>
+function openLogin(){
+  if(window.name!='hotspot_logout') return true;
+  open('$(link-login)','_blank','');
+  window.close();return false;
+}
+document.getElementById('title').innerHTML = window.location.hostname + ' > logout';
+</script>
+</body>
+</html>

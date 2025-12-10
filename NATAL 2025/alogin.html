@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title id="title">Redirect</title>
+  <meta http-equiv="refresh" content="2; url=$(link-redirect)">
+  <meta name="theme-color" content="#8b0000" />
+  <style>
+    html,body{height:100%;margin:0;font-family:Arial,Helvetica,sans-serif}
+    body{
+      background:#8b0000 url('./870870eb-f71e-4df0-9a73-961df616b845.jpg') center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;color:#fff;
+    }
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.35)}
+    .box{
+      position:relative;z-index:2;width:360px;max-width:90%;padding:22px;border-radius:14px;
+      background:rgba(255,255,255,0.08);backdrop-filter:blur(6px);text-align:center;box-shadow:0 8px 26px rgba(0,0,0,0.45)
+    }
+    a{color:#ffdcdc;text-decoration:underline}
+    .loader{margin:14px auto 6px;width:48px;height:48px;border-radius:50%;border:4px solid rgba(255,255,255,0.18);border-top-color:#ff1a1a;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body onload="startClock()">
+  <div class="overlay"></div>
+  <div class="box">
+    <h2 style="margin:0 0 6px 0">✅ Terhubung</h2>
+    <div class="loader" aria-hidden="true"></div>
+    <p style="margin:8px 0 0 0">Jika belum diarahkan, <a href="./login">klik di sini</a></p>
+    <small style="display:block;margin-top:8px;opacity:0.9">Kamu akan dialihkan secara otomatis</small>
+  </div>
+
+<script>
+function startClock(){
+  $(if popup == 'true')
+  open('$(link-status)','hotspot_status','toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=290,height=200');
+  $(endif)
+  // also try JS redirect as fallback if meta-refresh not honored
+  setTimeout(function(){
+    var target = '$(link-redirect)';
+    if(target && target.indexOf('http')===0) location.href = target; else location.href = './success.html';
+  },2000);
+}
+
+document.getElementById('title').innerText = window.location.hostname + ' > redirect';
+</script>
+</body>
+</html>
+
